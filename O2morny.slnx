@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="O2morny.Application/O2morny.Application.csproj" />
+  <Project Path="O2morny.Domain/O2morny.Domain.csproj" />
+  <Project Path="O2morny.Infrastructure/O2morny.Infrastructure.csproj" />
+  <Project Path="O2morny/O2morny.API.csproj" />
+</Solution>
