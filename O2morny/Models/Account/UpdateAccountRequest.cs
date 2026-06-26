@@ -14,6 +14,12 @@ namespace O2morny.API.Models.Account
 
         public string Address { get; set; }
 
+        public string Role { get; set; }
+
+        public decimal? ServiceProviderExperienceYears { get; set; }
+
+        public string? ServiceProviderDescription { get; set; }
+
         public IFormFile? ProfilePictureFile { get; set; }
     }
 }

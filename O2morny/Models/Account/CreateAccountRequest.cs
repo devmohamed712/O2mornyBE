@@ -20,6 +20,10 @@
 
         public string Role { get; set; }
 
+        public decimal? ServiceProviderExperienceYears { get; set; }
+
+        public string? ServiceProviderDescription { get; set; }
+
         public IFormFile? NationalIdPictureFile { get; set; }
 
         public IFormFile? ProfilePictureFile { get; set; }

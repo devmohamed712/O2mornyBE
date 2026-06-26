@@ -24,5 +24,9 @@ namespace O2morny.Application.Features.Account
         public string ProfilePicture { get; set; }
 
         public AccountStatus Status { get; set; }
+
+        public decimal? ServiceProviderExperienceYears { get; set; }
+
+        public string? ServiceProviderDescription { get; set; }
     }
 }

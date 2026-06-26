@@ -35,5 +35,6 @@ namespace O2morny.Domain.Common.Entities
 
 
         public City City { get; set; }
+        public ServiceProviderProfile? ServiceProviderProfile { get; set; }
     }
 }

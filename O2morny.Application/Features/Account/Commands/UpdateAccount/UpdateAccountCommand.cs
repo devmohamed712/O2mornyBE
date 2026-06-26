@@ -18,5 +18,11 @@ namespace O2morny.Application.Features.Account
         public string Address { get; set; }
 
         public FileModel? ProfilePictureFile { get; set; }
+
+        public string Role { get; set; }
+
+        public decimal? ServiceProviderExperienceYears { get; set; }
+
+        public string? ServiceProviderDescription { get; set; }
     }
 }

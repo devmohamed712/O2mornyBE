@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using O2morny.Application.Common.Exceptions;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
+using O2morny.Domain.Common.Entities;
 using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Account
@@ -56,7 +57,12 @@ namespace O2morny.Application.Features.Account
                 Address = request.Address.Trim(),
                 IsAcceptTerms = request.IsAcceptTerms,
                 IsAcceptPrivacy = request.IsAcceptPrivacy,
-                Status = AccountStatus.Pending
+                Status = AccountStatus.Pending,
+                ServiceProviderProfile = request.Role == nameof(AccountRole.ServiceProvider) ? new ServiceProviderProfile
+                {
+                    ExperienceYears = request.ServiceProviderExperienceYears!.Value,
+                    Description = request.ServiceProviderDescription!.Trim()
+                } : null
             };
 
             if (request.ProfilePictureFile != null || request.NationalIdPictureFile != null)

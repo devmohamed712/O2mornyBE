@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using O2morny.Application.Common.Exceptions;
 using O2morny.Application.Common.Interfaces.Services;
 using O2morny.Application.Common.Models;
 using O2morny.Application.Features.Auth.DTOs;
@@ -63,18 +64,18 @@ namespace O2morny.Infrastructure.Services
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
-                throw new Exception("User not found");
+                throw new NotFoundException("User not found");
 
             var roleExists = await _roleManager.RoleExistsAsync(role);
 
             if (!roleExists)
-                throw new Exception("Invalid role");
+                throw new BadRequestException("Invalid role");
 
             var result = await _userManager.AddToRoleAsync(user, role);
 
             if (!result.Succeeded)
             {
-                throw new Exception(
+                throw new BadRequestException(
                     string.Join(", ", result.Errors.Select(e => e.Description))
                 );
             }

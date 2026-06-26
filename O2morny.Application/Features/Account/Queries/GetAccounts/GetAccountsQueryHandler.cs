@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using O2morny.Application.Common.Interfaces.Persistence;
-using O2morny.Application.Features.Account;
 
 namespace O2morny.Application.Features.Account
 {
@@ -29,7 +28,9 @@ namespace O2morny.Application.Features.Account
                     Address = x.Address,
                     ProfilePicture = x.ProfilePicture,
                     NationalIdPicture = x.NationalIdPicture,
-                    Status = x.Status
+                    Status = x.Status,
+                    ServiceProviderExperienceYears = x.ServiceProviderProfile != null ? x.ServiceProviderProfile.ExperienceYears : null,
+                    ServiceProviderDescription = x.ServiceProviderProfile != null ? x.ServiceProviderProfile.Description : null
                 })
                 .ToListAsync(ct);
         }

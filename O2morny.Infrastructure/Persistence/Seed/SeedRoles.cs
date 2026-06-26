@@ -20,8 +20,8 @@ namespace O2morny.Infrastructure.Persistence.Seed
                 new()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = AccountRole.Admin.ToString(),
-                    NormalizedName = AccountRole.Admin.ToString().ToUpper(),
+                    Name = nameof(AccountRole.Admin),
+                    NormalizedName = nameof(AccountRole.Admin).ToUpper(),
                     EnName = "Administrator",
                     ArName = "مدير النظام"
                 },
@@ -29,8 +29,8 @@ namespace O2morny.Infrastructure.Persistence.Seed
                 new()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = AccountRole.Client.ToString(),
-                    NormalizedName = AccountRole.Client.ToString().ToUpper(),
+                    Name = nameof(AccountRole.Client),
+                    NormalizedName = nameof(AccountRole.Client).ToUpper(),
                     EnName = "Client",
                     ArName = "عميل"
                 },
@@ -38,8 +38,8 @@ namespace O2morny.Infrastructure.Persistence.Seed
                 new()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = AccountRole.ServiceProvider.ToString(),
-                    NormalizedName = AccountRole.ServiceProvider.ToString().ToUpper(),
+                    Name = nameof(AccountRole.ServiceProvider),
+                    NormalizedName = nameof(AccountRole.ServiceProvider).ToUpper(),
                     EnName = "Service Provider",
                     ArName = "مقدم خدمة"
                 }

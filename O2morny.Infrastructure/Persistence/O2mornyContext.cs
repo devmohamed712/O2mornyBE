@@ -18,6 +18,7 @@ namespace O2morny.Infrastructure.Persistence
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<ServiceProviderProfile> ServiceProviderProfiles { get; set; }
         public DbSet<WhatsappOtp> WhatsappOtps { get; set; }
         public DbSet<Message> Messages { get; set; }
 

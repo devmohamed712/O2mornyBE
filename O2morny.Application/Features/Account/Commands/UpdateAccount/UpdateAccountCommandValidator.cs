@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Account
 {
@@ -37,6 +38,27 @@ namespace O2morny.Application.Features.Account
                             .WithMessage("Profile picture file name is required");
                     });
             });
+
+            RuleFor(x => x.Role)
+                .NotEmpty()
+                .WithMessage("Role is required")
+                .Must(x => x == nameof(AccountRole.Client) ||
+                           x == nameof(AccountRole.ServiceProvider))
+                .WithMessage("Invalid role");
+
+            RuleFor(x => x.ServiceProviderExperienceYears)
+                .NotNull()
+                .WithMessage("Years of experience is required.")
+                .GreaterThan(0)
+                .WithMessage("Years of experience must be greater than 0.")
+                .When(x => x.Role == nameof(AccountRole.ServiceProvider));
+
+            RuleFor(x => x.ServiceProviderDescription)
+                .NotEmpty()
+                .WithMessage("Description is required.")
+                .MaximumLength(4000)
+                .WithMessage("Description must not exceed 4000 characters.")
+                .When(x => x.Role == nameof(AccountRole.ServiceProvider));
         }
     }
 }
