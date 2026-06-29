@@ -9,6 +9,7 @@ namespace O2morny.Application.Common.Interfaces.Persistence
         DbSet<City> Cities { get; }
         DbSet<Account> Accounts { get; }
         DbSet<ServiceProviderProfile> ServiceProviderProfiles { get; set; }
+        DbSet<ServiceProviderReview> ServiceProviderReviews { get; set; }
         DbSet<WhatsappOtp> WhatsappOtps { get; }
         DbSet<Message> Messages { get; }
 

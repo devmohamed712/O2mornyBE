@@ -36,5 +36,6 @@ namespace O2morny.Domain.Common.Entities
 
         public City City { get; set; }
         public ServiceProviderProfile? ServiceProviderProfile { get; set; }
+        public ICollection<ServiceProviderReview> WrittenReviews { get; set; } = [];
     }
 }

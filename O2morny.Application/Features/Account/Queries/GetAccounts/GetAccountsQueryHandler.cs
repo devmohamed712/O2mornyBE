@@ -15,8 +15,13 @@ namespace O2morny.Application.Features.Account
 
         public async Task<List<AccountDto>> Handle(GetAccountsQuery request, CancellationToken ct)
         {
+            int skip = (request.Page - 1) * request.PageSize;
+
             return await _context.Accounts
                 .AsNoTracking()
+                .OrderBy(x => x.Name)
+                .Skip(skip)
+                .Take(request.PageSize)
                 .Select(x => new AccountDto
                 {
                     Id = x.Id,
@@ -29,8 +34,12 @@ namespace O2morny.Application.Features.Account
                     ProfilePicture = x.ProfilePicture,
                     NationalIdPicture = x.NationalIdPicture,
                     Status = x.Status,
-                    ServiceProviderExperienceYears = x.ServiceProviderProfile != null ? x.ServiceProviderProfile.ExperienceYears : null,
-                    ServiceProviderDescription = x.ServiceProviderProfile != null ? x.ServiceProviderProfile.Description : null
+                    ServiceProviderExperienceYears = x.ServiceProviderProfile != null
+                        ? x.ServiceProviderProfile.ExperienceYears
+                        : null,
+                    ServiceProviderDescription = x.ServiceProviderProfile != null
+                        ? x.ServiceProviderProfile.Description
+                        : null
                 })
                 .ToListAsync(ct);
         }
