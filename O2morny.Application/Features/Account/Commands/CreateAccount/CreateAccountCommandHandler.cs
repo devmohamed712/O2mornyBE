@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using O2morny.Application.Common.Exceptions;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
-using O2morny.Domain.Common.Entities;
 using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Account
@@ -58,11 +57,6 @@ namespace O2morny.Application.Features.Account
                 IsAcceptTerms = request.IsAcceptTerms,
                 IsAcceptPrivacy = request.IsAcceptPrivacy,
                 Status = AccountStatus.Pending,
-                ServiceProviderProfile = request.Role == nameof(AccountRole.ServiceProvider) ? new ServiceProviderProfile
-                {
-                    ExperienceYears = request.ServiceProviderExperienceYears!.Value,
-                    Description = request.ServiceProviderDescription!.Trim()
-                } : null
             };
 
             if (request.ProfilePictureFile != null || request.NationalIdPictureFile != null)
@@ -86,7 +80,7 @@ namespace O2morny.Application.Features.Account
 
             await _context.SaveChangesAsync(ct);
 
-            await _authService.AssignRoleAsync(account.Id, request.Role);
+            await _authService.AssignRoleAsync(account.Id, nameof(AccountRole.User));
 
             return _mapper.Map<AccountDto>(account);
         }

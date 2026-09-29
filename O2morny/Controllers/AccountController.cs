@@ -57,9 +57,6 @@ public class AccountController : ControllerBase
             Address = request.Address,
             IsAcceptTerms = request.IsAcceptTerms,
             IsAcceptPrivacy = request.IsAcceptPrivacy,
-            Role = request.Role,
-            ServiceProviderExperienceYears = request.ServiceProviderExperienceYears,
-            ServiceProviderDescription = request.ServiceProviderDescription,
 
             NationalIdPictureFile =
                 request.NationalIdPictureFile != null
@@ -98,9 +95,6 @@ public class AccountController : ControllerBase
             HideBirthDate = request.HideBirthDate,
             CityId = request.CityId,
             Address = request.Address,
-            Role = request.Role,
-            ServiceProviderExperienceYears = request.ServiceProviderExperienceYears,
-            ServiceProviderDescription = request.ServiceProviderDescription,
 
             ProfilePictureFile =
                 request.ProfilePictureFile != null

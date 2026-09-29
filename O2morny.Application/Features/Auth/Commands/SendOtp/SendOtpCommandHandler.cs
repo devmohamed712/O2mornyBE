@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using O2morny.Application.Common.Extensions;
-using O2morny.Application.Common.Helpers;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
 using O2morny.Domain.Common.Entities;
@@ -24,7 +23,11 @@ namespace O2morny.Application.Features.Auth
 
         public async Task Handle(SendOtpCommand request, CancellationToken ct)
         {
-            var phone = PhoneHelper.Normalize(request.PhoneNumber);
+            string? phone = PhoneNormalizer.Normalize(request.PhoneNumber);
+            if (string.IsNullOrEmpty(phone))
+            {
+                throw new Exception("Phone number isn't valid");
+            }
 
             var userId = await _authService.GetUserIdByPhone(phone);
 

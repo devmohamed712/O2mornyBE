@@ -29,20 +29,11 @@ namespace O2morny.Infrastructure.Persistence.Seed
                 new()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = nameof(AccountRole.Client),
-                    NormalizedName = nameof(AccountRole.Client).ToUpper(),
-                    EnName = "Client",
-                    ArName = "عميل"
+                    Name = nameof(AccountRole.User),
+                    NormalizedName = nameof(AccountRole.User).ToUpper(),
+                    EnName = "User",
+                    ArName = "مستخدم"
                 },
-
-                new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = nameof(AccountRole.ServiceProvider),
-                    NormalizedName = nameof(AccountRole.ServiceProvider).ToUpper(),
-                    EnName = "Service Provider",
-                    ArName = "مقدم خدمة"
-                }
             };
 
             foreach (var role in roles)

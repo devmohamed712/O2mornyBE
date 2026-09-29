@@ -27,24 +27,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ReceiverId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -339,9 +321,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Accounts");
-
-            migrationBuilder.DropTable(
-                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");

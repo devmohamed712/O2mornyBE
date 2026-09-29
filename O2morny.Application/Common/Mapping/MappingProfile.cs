@@ -14,7 +14,6 @@ namespace O2morny.Application.Common.Mapping
             CreateMap<Country, CountryDto>();
             CreateMap<City, CityDto>();
             CreateMap<Account, AccountDto>();
-            CreateMap<ServiceProviderReview, ServiceProviderReviewDto>();
         }
     }
 }

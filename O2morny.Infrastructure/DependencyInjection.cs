@@ -11,7 +11,6 @@ using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
 using O2morny.Application.Common.Mapping;
 using O2morny.Infrastructure.FileSystem;
-using O2morny.Infrastructure.Identity;
 using O2morny.Infrastructure.Persistence;
 using O2morny.Infrastructure.Persistence.Identity;
 using O2morny.Infrastructure.Services;

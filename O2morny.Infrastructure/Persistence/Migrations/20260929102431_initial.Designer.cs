@@ -12,8 +12,8 @@ using O2morny.Infrastructure.Persistence;
 namespace O2morny.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(O2mornyContext))]
-    [Migration("20260625192240_add_service_provider")]
-    partial class add_service_provider
+    [Migration("20260929102431_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,66 +267,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                     b.ToTable("Countries", (string)null);
                 });
 
-            modelBuilder.Entity("O2morny.Domain.Common.Entities.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages", (string)null);
-                });
-
-            modelBuilder.Entity("O2morny.Domain.Common.Entities.ServiceProviderProfile", b =>
-                {
-                    b.Property<string>("AccountId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<decimal>("ExperienceYears")
-                        .HasPrecision(3, 1)
-                        .HasColumnType("decimal(3,1)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("ServiceProviderProfiles", (string)null);
-                });
-
             modelBuilder.Entity("O2morny.Domain.Common.Entities.WhatsappOtp", b =>
                 {
                     b.Property<Guid>("Id")
@@ -546,23 +486,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("O2morny.Domain.Common.Entities.ServiceProviderProfile", b =>
-                {
-                    b.HasOne("O2morny.Domain.Common.Entities.Account", "Account")
-                        .WithOne("ServiceProviderProfile")
-                        .HasForeignKey("O2morny.Domain.Common.Entities.ServiceProviderProfile", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("O2morny.Domain.Common.Entities.Account", b =>
-                {
-                    b.Navigation("ServiceProviderProfile")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("O2morny.Domain.Common.Entities.City", b =>

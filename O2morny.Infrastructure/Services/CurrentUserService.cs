@@ -2,7 +2,7 @@
 using O2morny.Application.Common.Interfaces.Identity;
 using System.Security.Claims;
 
-namespace O2morny.Infrastructure.Identity
+namespace O2morny.Infrastructure.Services
 {
 
     public class CurrentUserService : ICurrentUserService

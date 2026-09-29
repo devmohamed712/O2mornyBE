@@ -19,16 +19,15 @@ namespace O2morny.Infrastructure.Persistence.Seed
             var adminSettings = scope.ServiceProvider.GetRequiredService<IOptions<AdminSettings>>();
             var context = scope.ServiceProvider.GetRequiredService<O2mornyContext>();
 
-            var adminRoleName = "Admin";
-
             // 1. Ensure Role exists
-            if (!await roleManager.RoleExistsAsync(adminRoleName))
+            if (!await roleManager.RoleExistsAsync(nameof(AccountRole.Admin)))
             {
                 var roleResult = await roleManager.CreateAsync(new ApplicationRole
                 {
-                    Name = adminRoleName,
-                    EnName = "Admin",
-                    ArName = "مدير"
+                    Name = nameof(AccountRole.Admin),
+                    NormalizedName = nameof(AccountRole.Admin).ToUpper(),
+                    EnName = "Administrator",
+                    ArName = "مدير النظام"
                 });
 
                 if (!roleResult.Succeeded)
@@ -36,25 +35,29 @@ namespace O2morny.Infrastructure.Persistence.Seed
             }
 
             // 2. Loop on phones
-            foreach (var phone in adminSettings.Value.AdminPhones)
+            foreach (var phonenum in adminSettings.Value.AdminPhones)
             {
-                var normalizedPhone = phone.Trim();
+                string? phone = PhoneNormalizer.Normalize(phonenum);
+                if (string.IsNullOrEmpty(phone))
+                {
+                    throw new Exception("Phone number isn't valid");
+                }
 
-                var user = await userManager.FindByNameAsync(normalizedPhone);
+                var user = await userManager.FindByNameAsync(phone);
 
                 if (user == null)
                 {
                     user = new ApplicationUser
                     {
-                        UserName = normalizedPhone,
-                        PhoneNumber = normalizedPhone,
+                        UserName = phone,
+                        PhoneNumber = phone,
                         PhoneNumberConfirmed = true
                     };
 
                     var createResult = await userManager.CreateAsync(user);
 
                     if (!createResult.Succeeded)
-                        throw new Exception($"Failed to create admin user: {normalizedPhone}");
+                        throw new Exception($"Failed to create admin user: {phone}");
 
                     await context.Accounts.AddAsync(new Domain.Common.Entities.Account
                     {
@@ -74,12 +77,12 @@ namespace O2morny.Infrastructure.Persistence.Seed
                 }
 
                 // 3. Assign role safely
-                if (!await userManager.IsInRoleAsync(user, adminRoleName))
+                if (!await userManager.IsInRoleAsync(user, nameof(AccountRole.Admin)))
                 {
-                    var roleResult = await userManager.AddToRoleAsync(user, adminRoleName);
+                    var roleResult = await userManager.AddToRoleAsync(user, nameof(AccountRole.Admin));
 
                     if (!roleResult.Succeeded)
-                        throw new Exception($"Failed to assign role to: {normalizedPhone}");
+                        throw new Exception($"Failed to assign role to: {phone}");
                 }
             }
         }

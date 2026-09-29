@@ -34,12 +34,6 @@ namespace O2morny.Application.Features.Account
                     ProfilePicture = x.ProfilePicture,
                     NationalIdPicture = x.NationalIdPicture,
                     Status = x.Status,
-                    ServiceProviderExperienceYears = x.ServiceProviderProfile != null
-                        ? x.ServiceProviderProfile.ExperienceYears
-                        : null,
-                    ServiceProviderDescription = x.ServiceProviderProfile != null
-                        ? x.ServiceProviderProfile.Description
-                        : null
                 })
                 .ToListAsync(ct);
         }

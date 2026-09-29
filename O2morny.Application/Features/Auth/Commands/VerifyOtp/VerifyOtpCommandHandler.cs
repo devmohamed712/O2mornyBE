@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using O2morny.Application.Common.Helpers;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,11 @@ namespace O2morny.Application.Features.Auth
 
         public async Task<AuthResponse> Handle(VerifyOtpCommand request, CancellationToken ct)
         {
-            var phone = PhoneHelper.Normalize(request.PhoneNumber);
+            string? phone = PhoneNormalizer.Normalize(request.PhoneNumber);
+            if (string.IsNullOrEmpty(phone))
+            {
+                throw new Exception("Phone number isn't valid");
+            }
 
             var otp = await _applicationDbContext.WhatsappOtps.FirstOrDefaultAsync(x =>
                     x.PhoneNumber == phone &&

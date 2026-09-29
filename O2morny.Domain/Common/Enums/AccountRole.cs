@@ -2,8 +2,7 @@
 {
     public enum AccountRole
     {
-        Client,
-        ServiceProvider,
-        Admin
+        Admin,
+        User
     }
 }

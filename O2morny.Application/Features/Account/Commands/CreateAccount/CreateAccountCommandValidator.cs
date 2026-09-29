@@ -53,20 +53,6 @@ namespace O2morny.Application.Features.Account
                     RuleFor(x => x.NationalIdPictureFile.FileName)
                         .NotEmpty().WithMessage("National id picture file name is required");
                 });
-
-            RuleFor(x => x.Role)
-                .NotEmpty().WithMessage("Role is required")
-                .Must(x => x == nameof(AccountRole.Client) || x == nameof(AccountRole.ServiceProvider)).WithMessage("Invalid role");
-
-            RuleFor(x => x.ServiceProviderExperienceYears)
-                .NotNull().WithMessage("Years of experience is required.")
-                .GreaterThan(-1).WithMessage("Years of experience must be greater than or equal 0.")
-                .When(x => x.Role == nameof(AccountRole.ServiceProvider));
-
-            RuleFor(x => x.ServiceProviderDescription)
-                .NotEmpty().WithMessage("Description is required.")
-                .MaximumLength(4000).WithMessage("Description must not exceed 4000 characters.")
-                .When(x => x.Role == nameof(AccountRole.ServiceProvider));
         }
     }
 }

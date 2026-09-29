@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using O2morny.Application.Common.Exceptions;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
-using O2morny.Domain.Common.Entities;
-using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Account
 {
@@ -48,11 +46,6 @@ namespace O2morny.Application.Features.Account
             account.CityId = request.CityId;
             account.Address = request.Address.Trim();
             account.UpdatedAt = DateTime.UtcNow;
-            account.ServiceProviderProfile = request.Role == nameof(AccountRole.ServiceProvider) ? new ServiceProviderProfile
-            {
-                ExperienceYears = request.ServiceProviderExperienceYears!.Value,
-                Description = request.ServiceProviderDescription!.Trim()
-            } : null;
 
             if (request.ProfilePictureFile?.FileStream != null)
             {
