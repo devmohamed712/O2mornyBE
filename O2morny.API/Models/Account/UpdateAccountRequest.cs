@@ -6,8 +6,6 @@
 
         public DateTime DateOfBirth { get; set; }
 
-        public bool HideBirthDate { get; set; }
-
         public int CityId { get; set; }
 
         public string Address { get; set; }

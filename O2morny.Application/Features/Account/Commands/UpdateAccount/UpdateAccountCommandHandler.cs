@@ -42,7 +42,6 @@ namespace O2morny.Application.Features.Account
 
             account.Name = request.Name.Trim();
             account.DateOfBirth = request.DateOfBirth;
-            account.HideBirthDate = request.HideBirthDate;
             account.CityId = request.CityId;
             account.Address = request.Address.Trim();
             account.UpdatedAt = DateTime.UtcNow;

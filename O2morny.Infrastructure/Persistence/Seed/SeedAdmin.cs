@@ -67,8 +67,6 @@ namespace O2morny.Infrastructure.Persistence.Seed
                         CityId = 3,
                         CreatedAt = DateTime.UtcNow,
                         DateOfBirth = new DateTime(1994, 7, 15),
-                        HideBirthDate = true,
-                        NationalId = user.UserName,
                         IsAcceptPrivacy = true,
                         IsAcceptTerms = true,
                         Status = AccountStatus.Active

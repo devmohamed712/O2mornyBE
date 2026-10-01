@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using O2morny.Application.Common.Extensions;
-using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Account
 {
@@ -23,9 +21,6 @@ namespace O2morny.Application.Features.Account
                 .Must(x => !string.IsNullOrWhiteSpace(x))
                 .WithMessage("Address is required");
 
-            RuleFor(x => x.NationalId)
-                .ValidEgyptianNationalId();
-
             RuleFor(x => x.IsAcceptTerms)
                 .Equal(true).WithMessage("Terms must be accepted");
 
@@ -41,17 +36,6 @@ namespace O2morny.Application.Features.Account
 
                     RuleFor(x => x.ProfilePictureFile.FileName)
                         .NotEmpty().WithMessage("Profile picture file name is required");
-                });
-
-            RuleFor(x => x.NationalIdPictureFile)
-                .NotNull().WithMessage("National id picture is required")
-                .DependentRules(() =>
-                {
-                    RuleFor(x => x.NationalIdPictureFile.FileStream)
-                        .NotNull().WithMessage("National id picture stream is required");
-
-                    RuleFor(x => x.NationalIdPictureFile.FileName)
-                        .NotEmpty().WithMessage("National id picture file name is required");
                 });
         }
     }

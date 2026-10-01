@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using O2morny.Application.Common.Interfaces.Services;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace O2morny.Infrastructure.Services
 {
@@ -48,7 +49,11 @@ namespace O2morny.Infrastructure.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception(result);
+                using var jsonResult = JsonDocument.Parse(result);
+                var error = jsonResult.RootElement.TryGetProperty("error", out var errorProperty)
+                    ? errorProperty.GetString()
+                    : null;
+                throw new Exception(error?.ToString() ?? result);
             }
         }
     }

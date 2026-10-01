@@ -1,22 +1,23 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using O2morny.Application.Common.Interfaces.Persistence;
 using O2morny.Application.Common.Interfaces.Services;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using O2morny.Application.Features.Account;
+using O2morny.Domain.Common.Enums;
 
 namespace O2morny.Application.Features.Auth
 {
     public class VerifyOtpHandler : IRequestHandler<VerifyOtpCommand, AuthResponse>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        private readonly IAuthService _auth;
+        private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public VerifyOtpHandler(IApplicationDbContext applicationDbContext, IAuthService auth, IMapper mapper)
+        public VerifyOtpHandler(IApplicationDbContext applicationDbContext, IAuthService authService, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
-            _auth = auth;
+            _authService = authService;
             _mapper = mapper;
         }
 
@@ -41,20 +42,21 @@ namespace O2morny.Application.Features.Auth
 
             otp.IsUsed = true;
 
-            var userId = await _auth.GetUserIdByPhone(phone);
+            var userId = await _authService.GetUserIdByPhone(phone);
 
             if (userId == null)
             {
-                userId = await _auth.CreateUser(phone);
+                userId = await _authService.CreateUser(phone);
+                await _authService.AssignRoleAsync(userId, nameof(AccountRole.User));
             }
 
             await _applicationDbContext.SaveChangesAsync(ct);
 
-            var token = await _auth.GenerateJwt(userId);
+            var token = await _authService.GenerateJwt(userId);
 
             var account = await _applicationDbContext.Accounts.FirstOrDefaultAsync(x => x.Id == userId, ct);
 
-            var role = await _auth.GetUserRoleById(userId);
+            var role = await _authService.GetUserRoleById(userId);
 
             return new AuthResponse
             {

@@ -15,30 +15,23 @@ namespace O2morny.Application.Features.Account
         private readonly IConfiguration _configuration;
         private readonly IApplicationDbContext _context;
         private readonly IStorageService _storageService;
-        private readonly IAuthService _authService;
+
 
         public CreateAccountCommandHandler(
             IMapper mapper,
             IConfiguration configuration,
             IApplicationDbContext context,
-            IStorageService storageService,
-            IAuthService authService
+            IStorageService storageService
             )
         {
             _context = context;
             _storageService = storageService;
             _configuration = configuration;
             _mapper = mapper;
-            _authService = authService;
         }
 
         public async Task<AccountDto> Handle(CreateAccountCommand request, CancellationToken ct)
         {
-            var nationalIdExists = await _context.Accounts.AnyAsync(x => x.NationalId == request.NationalId, ct);
-
-            if (nationalIdExists)
-                throw new BadRequestException("National ID already exists");
-
             var cityExists = await _context.Cities
                 .AnyAsync(x => x.Id == request.CityId, ct);
 
@@ -49,38 +42,25 @@ namespace O2morny.Application.Features.Account
             {
                 Id = request.Id,
                 Name = request.Name.Trim(),
-                NationalId = request.NationalId.Trim(),
                 DateOfBirth = request.DateOfBirth,
-                HideBirthDate = request.HideBirthDate,
                 CityId = request.CityId,
                 Address = request.Address.Trim(),
                 IsAcceptTerms = request.IsAcceptTerms,
                 IsAcceptPrivacy = request.IsAcceptPrivacy,
-                Status = AccountStatus.Pending,
+                Status = AccountStatus.Active,
             };
 
-            if (request.ProfilePictureFile != null || request.NationalIdPictureFile != null)
+
+            if (request.ProfilePictureFile != null)
             {
-                if (request.ProfilePictureFile != null)
-                {
-                    string image = await _storageService.UploadFile(request.ProfilePictureFile.FileStream, Path.GetExtension(request.ProfilePictureFile.FileName).Trim('.'), _configuration["UploadedFiles:ProfilesImages"]!, request.Id);
+                string image = await _storageService.UploadFile(request.ProfilePictureFile.FileStream, Path.GetExtension(request.ProfilePictureFile.FileName).Trim('.'), _configuration["UploadedFiles:ProfilesImages"]!, request.Id);
 
-                    account.ProfilePicture = image;
-                }
-
-                if (request.NationalIdPictureFile != null)
-                {
-                    string image = await _storageService.UploadFile(request.NationalIdPictureFile.FileStream, Path.GetExtension(request.NationalIdPictureFile.FileName).Trim('.'), _configuration["UploadedFiles:NationalIdsImages"]!, request.Id);
-
-                    account.NationalIdPicture = image;
-                }
+                account.ProfilePicture = image;
             }
 
             await _context.Accounts.AddAsync(account, ct);
 
             await _context.SaveChangesAsync(ct);
-
-            await _authService.AssignRoleAsync(account.Id, nameof(AccountRole.User));
 
             return _mapper.Map<AccountDto>(account);
         }

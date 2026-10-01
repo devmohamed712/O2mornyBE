@@ -2,11 +2,8 @@
 {
     public enum AccountStatus
     {
-        Pending = 1,
-        UnderReview = 2,
-        Active = 3,
-        Rejected = 4,
-        Blocked = 5,
-        DeletedByUser = 6
+        Active = 1,
+        Blocked = 2,
+        DeletedByUser = 3
     }
 }

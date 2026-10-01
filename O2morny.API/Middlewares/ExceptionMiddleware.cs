@@ -53,7 +53,7 @@ namespace O2morny.API.Middlewares
                 await HandleExceptionAsync(
                     context,
                     StatusCodes.Status500InternalServerError,
-                    "Something went wrong.");
+                    ex.Message);
             }
         }
 

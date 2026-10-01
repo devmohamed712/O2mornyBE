@@ -11,15 +11,9 @@ namespace O2morny.Domain.Common.Entities
 
         public DateTime DateOfBirth { get; set; }
 
-        public bool HideBirthDate { get; set; }
-
         public int CityId { get; set; }
 
         public string Address { get; set; }
-
-        public string NationalId { get; set; }
-
-        public string? NationalIdPicture { get; set; }
 
         public string? ProfilePicture { get; set; }
 

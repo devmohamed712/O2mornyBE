@@ -9,11 +9,7 @@ namespace O2morny.Application.Features.Account
 
         public string Name { get; set; }
 
-        public string NationalId { get; set; }
-
         public DateTime DateOfBirth { get; set; }
-
-        public bool HideBirthDate { get; set; }
 
         public int CityId { get; set; }
 
@@ -22,8 +18,6 @@ namespace O2morny.Application.Features.Account
         public bool IsAcceptTerms { get; set; }
 
         public bool IsAcceptPrivacy { get; set; }
-
-        public FileModel NationalIdPictureFile { get; set; }
 
         public FileModel ProfilePictureFile { get; set; }
     }

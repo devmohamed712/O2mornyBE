@@ -26,14 +26,10 @@ namespace O2morny.Application.Features.Account
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    NationalId = x.NationalId,
                     DateOfBirth = x.DateOfBirth,
-                    HideBirthDate = x.HideBirthDate,
                     CityId = x.CityId,
                     Address = x.Address,
                     ProfilePicture = x.ProfilePicture,
-                    NationalIdPicture = x.NationalIdPicture,
-                    Status = x.Status,
                 })
                 .ToListAsync(ct);
         }

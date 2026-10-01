@@ -30,9 +30,6 @@ namespace O2morny.Infrastructure.Persistence.Configurations
             builder.Property(x => x.DateOfBirth)
                 .IsRequired();
 
-            builder.Property(x => x.HideBirthDate)
-                .HasDefaultValue(false);
-
             builder.Property(x => x.CityId)
                 .IsRequired();
 
@@ -43,13 +40,6 @@ namespace O2morny.Infrastructure.Persistence.Configurations
             builder.Property(x => x.ProfilePicture)
                 .HasMaxLength(1000);
 
-            builder.Property(x => x.NationalId)
-                .HasMaxLength(50)
-                .IsRequired();
-
-            builder.Property(x => x.NationalIdPicture)
-                .HasMaxLength(1000);
-
             builder.Property(x => x.CreatedAt)
                 .HasDefaultValueSql("GETUTCDATE()");
 
@@ -57,7 +47,7 @@ namespace O2morny.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.Status)
                 .HasConversion<int>()
-                .HasDefaultValue(AccountStatus.Pending);
+                .HasDefaultValue(AccountStatus.Active);
 
             builder.Property(x => x.IsAcceptTerms)
                 .HasDefaultValue(false);

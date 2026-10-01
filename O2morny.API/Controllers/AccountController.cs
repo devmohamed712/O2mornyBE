@@ -50,22 +50,11 @@ public class AccountController : ControllerBase
         {
             Id = userId,
             Name = request.Name,
-            NationalId = request.NationalId,
             DateOfBirth = request.DateOfBirth,
-            HideBirthDate = request.HideBirthDate,
             CityId = request.CityId,
             Address = request.Address,
             IsAcceptTerms = request.IsAcceptTerms,
             IsAcceptPrivacy = request.IsAcceptPrivacy,
-
-            NationalIdPictureFile =
-                request.NationalIdPictureFile != null
-                    ? new FileModel
-                    {
-                        FileName = request.NationalIdPictureFile.FileName,
-                        FileStream = request.NationalIdPictureFile.OpenReadStream()
-                    }
-                    : null,
 
             ProfilePictureFile =
                 request.ProfilePictureFile != null
@@ -92,7 +81,6 @@ public class AccountController : ControllerBase
             Id = userId,
             Name = request.Name,
             DateOfBirth = request.DateOfBirth,
-            HideBirthDate = request.HideBirthDate,
             CityId = request.CityId,
             Address = request.Address,
 

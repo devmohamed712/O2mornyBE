@@ -12,7 +12,7 @@ using O2morny.Infrastructure.Persistence;
 namespace O2morny.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(O2mornyContext))]
-    [Migration("20260929102431_initial")]
+    [Migration("20260930085305_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -152,11 +152,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HideBirthDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<bool>("IsAcceptPrivacy")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -171,15 +166,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("NationalId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("NationalIdPicture")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("ProfilePicture")
                         .HasMaxLength(1000)
