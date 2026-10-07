@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using O2morny.API.Models.Account;
 using O2morny.Application.Common.Models;
 using O2morny.Application.Features.Account;
+using O2morny.Domain.Common.Enums;
 using System.Security.Claims;
 
 namespace O2morny.API.Controllers;
@@ -20,6 +21,7 @@ public class AccountController : ControllerBase
         _mediator = mediator;
     }
 
+    [Authorize(Roles = nameof(AccountRole.Admin))]
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken ct)
     {
@@ -27,12 +29,29 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = nameof(AccountRole.Admin))]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id, CancellationToken ct)
     {
         var result = await _mediator.Send(new GetAccountByIdQuery
         {
             Id = id
+        }, ct);
+
+        if (result == null)
+            return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> GetCurrentAccount(CancellationToken ct)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+        var result = await _mediator.Send(new GetAccountByIdQuery
+        {
+            Id = userId
         }, ct);
 
         if (result == null)
@@ -50,9 +69,9 @@ public class AccountController : ControllerBase
         {
             Id = userId,
             Name = request.Name,
+            Address = request.Address,
             DateOfBirth = request.DateOfBirth,
             CityId = request.CityId,
-            Address = request.Address,
             IsAcceptTerms = request.IsAcceptTerms,
             IsAcceptPrivacy = request.IsAcceptPrivacy,
 
@@ -80,9 +99,10 @@ public class AccountController : ControllerBase
         {
             Id = userId,
             Name = request.Name,
+            Address = request.Address,
             DateOfBirth = request.DateOfBirth,
             CityId = request.CityId,
-            Address = request.Address,
+            ProfilePicture = request.ProfilePicture,
 
             ProfilePictureFile =
                 request.ProfilePictureFile != null

@@ -22,21 +22,6 @@ namespace O2morny.Application.Features.Account
             RuleFor(x => x.Address)
                 .Must(x => !string.IsNullOrWhiteSpace(x))
                 .WithMessage("Address is required");
-
-            When(x => x.ProfilePictureFile != null, () =>
-            {
-                RuleFor(x => x.ProfilePictureFile!)
-                    .ChildRules(file =>
-                    {
-                        file.RuleFor(x => x.FileStream)
-                            .NotNull()
-                            .WithMessage("Profile picture stream is required");
-
-                        file.RuleFor(x => x.FileName)
-                            .NotEmpty()
-                            .WithMessage("Profile picture file name is required");
-                    });
-            });
         }
     }
 }

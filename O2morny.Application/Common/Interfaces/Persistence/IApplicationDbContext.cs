@@ -9,6 +9,9 @@ namespace O2morny.Application.Common.Interfaces.Persistence
         DbSet<City> Cities { get; }
         DbSet<Account> Accounts { get; }
         DbSet<WhatsappOtp> WhatsappOtps { get; }
+        DbSet<Shop> Shops { get; }
+        DbSet<ShopImage> ShopImages { get; }
+        DbSet<ShopWorkingHour> ShopWorkingHours { get; }
 
         Task<int> SaveChangesAsync(CancellationToken ct);
     }

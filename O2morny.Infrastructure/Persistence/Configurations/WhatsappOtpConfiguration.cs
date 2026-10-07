@@ -13,6 +13,10 @@ namespace O2morny.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+
             builder.Property(x => x.PhoneNumber)
                 .HasMaxLength(20)
                 .IsRequired();

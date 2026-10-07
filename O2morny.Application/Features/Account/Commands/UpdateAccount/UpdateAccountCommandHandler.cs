@@ -40,6 +40,8 @@ namespace O2morny.Application.Features.Account
             if (!cityExists)
                 throw new NotFoundException("City not found");
 
+            var oldProfilePicture = account.ProfilePicture;
+
             account.Name = request.Name.Trim();
             account.DateOfBirth = request.DateOfBirth;
             account.CityId = request.CityId;
@@ -48,7 +50,7 @@ namespace O2morny.Application.Features.Account
 
             if (request.ProfilePictureFile?.FileStream != null)
             {
-                string image = await _storageService.UploadFile(
+                var image = await _storageService.UploadFile(
                     request.ProfilePictureFile.FileStream,
                     Path.GetExtension(request.ProfilePictureFile.FileName).Trim('.'),
                     _configuration["UploadedFiles:ProfilesImages"]!,
@@ -58,6 +60,13 @@ namespace O2morny.Application.Features.Account
             }
 
             await _context.SaveChangesAsync(ct);
+
+            if (request.ProfilePictureFile?.FileStream != null && !string.IsNullOrWhiteSpace(oldProfilePicture) && oldProfilePicture != account.ProfilePicture)
+            {
+                var oldImagePath = Path.Combine(_configuration["UploadedFiles:ProfilesImages"]!, oldProfilePicture);
+
+                _storageService.DeleteFile(oldImagePath);
+            }
 
             return _mapper.Map<AccountDto>(account);
         }

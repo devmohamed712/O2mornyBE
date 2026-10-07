@@ -19,6 +19,10 @@ namespace O2morny.Infrastructure.Persistence
         public DbSet<City> Cities { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<WhatsappOtp> WhatsappOtps { get; set; }
+        public DbSet<Shop> Shops { get; set; }
+        public DbSet<ShopImage> ShopImages { get; }
+        public DbSet<ShopWorkingHour> ShopWorkingHours { get; set; }
+
 
         public override Task<int> SaveChangesAsync(CancellationToken ct = default)
             => base.SaveChangesAsync(ct);

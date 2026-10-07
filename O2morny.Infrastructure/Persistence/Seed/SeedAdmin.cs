@@ -67,8 +67,6 @@ namespace O2morny.Infrastructure.Persistence.Seed
                         CityId = 3,
                         CreatedAt = DateTime.UtcNow,
                         DateOfBirth = new DateTime(1994, 7, 15),
-                        IsAcceptPrivacy = true,
-                        IsAcceptTerms = true,
                         Status = AccountStatus.Active
                     }, ct);
                     await context.SaveChangesAsync(ct);

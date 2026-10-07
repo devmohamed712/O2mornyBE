@@ -45,8 +45,6 @@ namespace O2morny.Application.Features.Account
                 DateOfBirth = request.DateOfBirth,
                 CityId = request.CityId,
                 Address = request.Address.Trim(),
-                IsAcceptTerms = request.IsAcceptTerms,
-                IsAcceptPrivacy = request.IsAcceptPrivacy,
                 Status = AccountStatus.Active,
             };
 

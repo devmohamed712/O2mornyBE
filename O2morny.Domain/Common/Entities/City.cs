@@ -17,5 +17,6 @@ namespace O2morny.Domain.Common.Entities
 
         public Country Country { get; set; }
         public ICollection<Account> Accounts { get; set; } = new HashSet<Account>();
+        public ICollection<Shop> Shops { get; set; } = new HashSet<Shop>();
     }
 }

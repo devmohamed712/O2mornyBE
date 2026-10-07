@@ -44,6 +44,14 @@ namespace O2morny.Infrastructure.Services
             return finalFileName;
         }
 
+        public void DeleteFile(string path)
+        {
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+        }
+
         public void DeleteDir(string path)
         {
             bool exists = System.IO.Directory.Exists(path);

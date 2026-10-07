@@ -5,8 +5,11 @@ namespace O2morny.Domain.Common.Entities
     public class Country : IEntity<int>, ISoftDelete
     {
         public int Id { get; set; }
+
         public string ArName { get; set; }
+
         public string EnName { get; set; }
+
         public bool IsDeleted { get; set; }
 
 

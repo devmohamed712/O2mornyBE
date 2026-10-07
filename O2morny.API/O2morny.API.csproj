@@ -20,4 +20,8 @@
     <ProjectReference Include="..\O2morny.Infrastructure\O2morny.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadedFiles\ShopsImages\" />
+  </ItemGroup>
+
 </Project>

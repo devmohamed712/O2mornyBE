@@ -34,27 +34,24 @@ namespace O2morny.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(x => x.Address)
-                .HasMaxLength(500)
+                .HasMaxLength(256)
                 .IsRequired();
 
             builder.Property(x => x.ProfilePicture)
-                .HasMaxLength(1000);
+                .HasMaxLength(1000)
+                .IsRequired(false);
 
             builder.Property(x => x.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("GETUTCDATE()")
+                .IsRequired();
 
-            builder.Property(x => x.UpdatedAt);
+            builder.Property(x => x.UpdatedAt)
+                .IsRequired(false);
 
             builder.Property(x => x.Status)
                 .HasConversion<int>()
-                .HasDefaultValue(AccountStatus.Active);
-
-            builder.Property(x => x.IsAcceptTerms)
-                .HasDefaultValue(false);
-
-            builder.Property(x => x.IsAcceptPrivacy)
-                .HasDefaultValue(false);
-
+                .HasDefaultValue(AccountStatus.Active)
+                .IsRequired();
 
             builder.HasOne(x => x.City)
                 .WithMany(x => x.Accounts)

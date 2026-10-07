@@ -31,11 +31,6 @@ namespace O2morny.Infrastructure.Persistence.Configurations
                 .WithMany(x => x.Cities)
                 .HasForeignKey(x => x.CountryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.Accounts)
-                .WithOne(x => x.City)
-                .HasForeignKey(x => x.CityId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

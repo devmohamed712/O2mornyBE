@@ -27,6 +27,7 @@ namespace O2morny.Application.Features.Account
                     Id = x.Id,
                     Name = x.Name,
                     DateOfBirth = x.DateOfBirth,
+                    CountryId = x.City.CountryId,
                     CityId = x.CityId,
                     Address = x.Address,
                     ProfilePicture = x.ProfilePicture,

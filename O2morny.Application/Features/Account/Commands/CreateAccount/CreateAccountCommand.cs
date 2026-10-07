@@ -19,6 +19,6 @@ namespace O2morny.Application.Features.Account
 
         public bool IsAcceptPrivacy { get; set; }
 
-        public FileModel ProfilePictureFile { get; set; }
+        public FileModel? ProfilePictureFile { get; set; }
     }
 }

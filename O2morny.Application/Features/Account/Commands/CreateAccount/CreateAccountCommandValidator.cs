@@ -26,17 +26,6 @@ namespace O2morny.Application.Features.Account
 
             RuleFor(x => x.IsAcceptPrivacy)
                 .Equal(true).WithMessage("Privacy policy must be accepted");
-
-            RuleFor(x => x.ProfilePictureFile)
-                .NotNull().WithMessage("Profile picture is required")
-                .DependentRules(() =>
-                {
-                    RuleFor(x => x.ProfilePictureFile.FileStream)
-                        .NotNull().WithMessage("Profile picture stream is required");
-
-                    RuleFor(x => x.ProfilePictureFile.FileName)
-                        .NotEmpty().WithMessage("Profile picture file name is required");
-                });
         }
     }
 }

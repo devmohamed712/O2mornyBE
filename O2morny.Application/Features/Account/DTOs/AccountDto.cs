@@ -10,6 +10,8 @@ namespace O2morny.Application.Features.Account
 
         public DateTime DateOfBirth { get; set; }
 
+        public int CountryId { get; set; }
+
         public int CityId { get; set; }
 
         public string Address { get; set; }

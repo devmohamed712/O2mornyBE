@@ -32,11 +32,6 @@ namespace O2morny.Infrastructure.Persistence.Configurations
 
             builder.HasIndex(x => x.EnName)
                 .IsUnique();
-
-            builder.HasMany(x => x.Cities)
-                .WithOne(x => x.Country)
-                .HasForeignKey(x => x.CountryId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

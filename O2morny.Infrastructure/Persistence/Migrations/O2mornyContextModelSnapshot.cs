@@ -135,8 +135,8 @@ namespace O2morny.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -148,16 +148,6 @@ namespace O2morny.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAcceptPrivacy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsAcceptTerms")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -248,6 +238,120 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Countries", (string)null);
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.Shop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<decimal>("Latitude")
+                        .HasPrecision(9, 6)
+                        .HasColumnType("decimal(9,6)");
+
+                    b.Property<decimal>("Longitude")
+                        .HasPrecision(9, 6)
+                        .HasColumnType("decimal(9,6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Shops", (string)null);
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.ShopImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShopId")
+                        .IsUnique()
+                        .HasFilter("[IsMain] = 1");
+
+                    b.ToTable("ShopImages", (string)null);
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.ShopWorkingHour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<TimeSpan>("CloseAt")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("OpenAt")
+                        .HasColumnType("time");
+
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShopId", "DayOfWeek", "OpenAt", "CloseAt")
+                        .IsUnique();
+
+                    b.ToTable("ShopWorkingHours", (string)null);
                 });
 
             modelBuilder.Entity("O2morny.Domain.Common.Entities.WhatsappOtp", b =>
@@ -471,14 +575,69 @@ namespace O2morny.Infrastructure.Persistence.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.Shop", b =>
+                {
+                    b.HasOne("O2morny.Domain.Common.Entities.City", "City")
+                        .WithMany("Shops")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("O2morny.Domain.Common.Entities.Account", "Owner")
+                        .WithMany("Shops")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.ShopImage", b =>
+                {
+                    b.HasOne("O2morny.Domain.Common.Entities.Shop", "Shop")
+                        .WithMany("Images")
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.ShopWorkingHour", b =>
+                {
+                    b.HasOne("O2morny.Domain.Common.Entities.Shop", "Shop")
+                        .WithMany("WorkingHours")
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.Account", b =>
+                {
+                    b.Navigation("Shops");
+                });
+
             modelBuilder.Entity("O2morny.Domain.Common.Entities.City", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Shops");
                 });
 
             modelBuilder.Entity("O2morny.Domain.Common.Entities.Country", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("O2morny.Domain.Common.Entities.Shop", b =>
+                {
+                    b.Navigation("Images");
+
+                    b.Navigation("WorkingHours");
                 });
 
             modelBuilder.Entity("O2morny.Infrastructure.Persistence.Identity.ApplicationUser", b =>

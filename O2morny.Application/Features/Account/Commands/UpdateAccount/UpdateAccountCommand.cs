@@ -15,6 +15,8 @@ namespace O2morny.Application.Features.Account
 
         public string Address { get; set; }
 
+        public string? ProfilePicture { get; set; }
+
         public FileModel? ProfilePictureFile { get; set; }
     }
 }

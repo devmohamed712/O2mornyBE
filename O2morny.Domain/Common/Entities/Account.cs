@@ -17,10 +17,6 @@ namespace O2morny.Domain.Common.Entities
 
         public string? ProfilePicture { get; set; }
 
-        public bool IsAcceptTerms { get; set; }
-
-        public bool IsAcceptPrivacy { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
@@ -29,5 +25,6 @@ namespace O2morny.Domain.Common.Entities
 
 
         public City City { get; set; }
+        public ICollection<Shop> Shops { get; set; } = new List<Shop>();
     }
 }
